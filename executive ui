@@ -487,3 +487,56 @@ function Library:New(name, version, description, icon)
 end
 		
 return Library
+
+--[[ 
+Script for making any UI frame draggable 
+Works for both PC and Mobile 
+]]--
+
+local UIS = game:GetService("UserInputService")
+
+local function makeDraggable(draggableFrame)
+    local dragging = false
+    local dragInput, dragStart, startPos
+
+    local function update(input)
+        local delta = input.Position - dragStart
+        draggableFrame.Position = UDim2.new(
+            startPos.X.Scale,
+            startPos.X.Offset + delta.X,
+            startPos.Y.Scale,
+            startPos.Y.Offset + delta.Y
+        )
+    end
+
+    draggableFrame.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true
+            dragStart = input.Position
+            startPos = draggableFrame.Position
+
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragging = false
+                end
+            end)
+        end
+    end)
+
+    draggableFrame.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            dragInput = input
+        end
+    end)
+
+    UIS.InputChanged:Connect(function(input)
+        if input == dragInput and dragging then
+            update(input)
+        end
+    end)
+end
+
+-- Example Usage:
+-- Replace "YourDraggableFrame" with the frame you want to make draggable
+local draggableFrame = script.Parent:WaitForChild("YourDraggableFrame")
+makeDraggable(draggableFrame)
