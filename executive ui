@@ -9,11 +9,19 @@ function Library:New(name, version, description, icon)
 	local Core = {
 		CurrentTab = nil, Activated = true
 	}
-	
-        G2L["1"] = Instance.new("ScreenGui", game:GetService("CoreGui"))
-        G2L["1"]["Name"] = [[NoatGui]]
-        G2L["1"]["ZIndexBehavior"] = Enum.ZIndexBehavior.Sibling
-	
+	-- StarterGui.NoatGui
+	G2L["1"] = Instance.new("ScreenGui", game.CoreGui);
+	G2L["1"]["Name"] = [[NoatGui]];
+	G2L["1"]["ZIndexBehavior"] = Enum.ZIndexBehavior.Sibling;
+
+	-- StarterGui.NoatGui.MainFrame
+	G2L["2"] = Instance.new("Frame", G2L["1"]);
+	G2L["2"]["BackgroundColor3"] = Color3.fromRGB(31, 31, 31);
+	G2L["2"]["Size"] = UDim2.new(0, 804, 0, 455);
+	G2L["2"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+	G2L["2"]["Position"] = UDim2.new(0.2580024003982544, 0, 0.21851849555969238, 0);
+	G2L["2"]["Name"] = [[MainFrame]];
+
 	-- StarterGui.NoatGui.MainFrame.Logo
 	G2L["3"] = Instance.new("ImageLabel", G2L["2"]);
 	G2L["3"]["BorderSizePixel"] = 0;
